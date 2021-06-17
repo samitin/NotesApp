@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="name">
+        <item>Название заметки 1</item>
+        <item>Название заметки 2</item>
+        <item>Название заметки 3</item>
+        <item>Название заметки 4</item>
+        <item>Название заметки 5</item>
+    </string-array>
+    <string-array name="description">
+        <item>Описание заметки 1</item>
+        <item>Описание заметки 2</item>
+        <item>Описание заметки 3</item>
+        <item>Описание заметки 4</item>
+        <item>Описание заметки 5</item>
+    </string-array>
+    <string-array name="date">
+        <item>01.01.01</item>
+        <item>02.02.02</item>
+        <item>03.03.03</item>
+        <item>04.04.04</item>
+        <item>05.05.05</item>
+    </string-array>
+    <string-array name="notes">
+        <item>Сама заметка 1</item>
+        <item>Сама заметка 2</item>
+        <item>Сама заметка 3</item>
+        <item>Сама заметка 4</item>
+        <item>Сама заметка 5</item>
+    </string-array>
+</resources>

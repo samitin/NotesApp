@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="NoteDitalsFragment"
+    android:padding="20dp">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/name_detals"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/name_1"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
+    <TextView
+        android:id="@+id/description_detals"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/description_1"
+        android:layout_marginTop="@dimen/default_padding"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
+    <TextView
+        android:id="@+id/date_detals"
+        android:layout_marginTop="@dimen/default_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/date_1"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
+    <TextView
+        android:id="@+id/note_detals"
+        android:layout_marginTop="@dimen/default_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/note_1"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
+
+
+</LinearLayout>

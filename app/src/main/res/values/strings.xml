@@ -32,4 +32,7 @@
     <string name="point_two">Пункт 2</string>
     <string name="point_three">Пункт 3</string>
     <string name="search">лупа</string>
+    <string name="fragment_navigation">боковое меню</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

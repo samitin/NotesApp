@@ -23,10 +23,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initToolbar();
     }
-    private Toolbar initToolbar() {
+    private void initToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        return toolbar;
+        initDrawer(toolbar);
     }
     private void initDrawer(Toolbar toolbar) {
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);

@@ -12,28 +12,29 @@ public class CardSourceImpi implements CardSource{
     private List<CardData>cardDataList;
     private Resources resources;
     public CardSourceImpi(Resources resources){
-        cardDataList=new ArrayList<>(7);
         this.resources=resources;
-        init();
+        cardDataList=new ArrayList<>(7);
     }
-    private void init(){
-        String[]names=resources.getStringArray(R.array.name);
+    public CardSourceImpi init(){
+        String[]titels=resources.getStringArray(R.array.name);
+        String[]descriptions=resources.getStringArray(R.array.description);
         int[]images=getImageArray();
-        String[]description=resources.getStringArray(R.array.description);
-        for (int i=0;i<names.length;i++)
-            cardDataList.add(new CardData(names[i],images[i],description[i]));
+        for (int i=0;i<titels.length;i++)
+            cardDataList.add(new CardData(titels[i],images[i],descriptions[i]));
+        return this;
     }
     private int[] getImageArray(){
         TypedArray pictures=resources.obtainTypedArray(R.array.picturis);
-        int[]images=new int[size()];
-        for (int i=0;i<images.length;i++)
+        int size=pictures.length();
+        int[] images=new int[size];
+        for (int i=0;i<size;i++)
             images[i]=pictures.getResourceId(i,0);
         return images;
     }
 
     @Override
-    public List<CardData> getCardDates() {
-        return cardDataList;
+    public CardData getCardData(int position) {
+        return cardDataList.get(position);
     }
 
     @Override

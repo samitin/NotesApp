@@ -12,14 +12,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/textViewName"
+            android:id="@+id/itemTextViewName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
             android:text="Title"
             android:textSize="@dimen/textTitle" />
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imageView"
+            android:id="@+id/itemImageView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/heightImage"
             android:layout_weight="1"
@@ -38,7 +38,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textViewDescription"
+            android:id="@+id/itenTextViewDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

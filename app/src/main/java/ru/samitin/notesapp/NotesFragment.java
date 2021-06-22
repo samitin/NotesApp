@@ -6,15 +6,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import ru.samitin.notesapp.domain.CardSource;
+import ru.samitin.notesapp.domain.CardSourceImpi;
 import ru.samitin.notesapp.domain.Note;
 
 
@@ -28,16 +31,40 @@ public class NotesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notes, container, false);
+        View view=inflater.inflate(R.layout.fragment_notes, container, false);
+        RecyclerView recyclerView=view.findViewById(R.id.recycler_view_lines);
+        CardSource data=new CardSourceImpi(getResources()).init();
+        initRecyclerView(recyclerView,data);
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initList(view);
     }
-    private void initList(View view){
-        LinearLayout layout=(LinearLayout)view;
+    private void initRecyclerView(RecyclerView recyclerView,CardSource data){
+        // Эта установка служит для повышения производительности системы
+        recyclerView.setHasFixedSize(true);
+        // Будем работать со встроенным менеджером
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        // Установим адаптер
+        CardNotesAdapter adapter=new CardNotesAdapter(data);
+        recyclerView.setAdapter(adapter);
+        DividerItemDecoration itemDicoration=new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL);
+        itemDicoration.setDrawable(getResources().getDrawable(R.drawable.seporator,null));
+        recyclerView.addItemDecoration(itemDicoration);
+        adapter.setOnItemClickListener(new CardNotesAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                corentNote=new Note(getResources().getStringArray(R.array.name)[position],
+                        getResources().getStringArray(R.array.description)[position],
+                        getResources().getStringArray(R.array.date)[position],
+                        getResources().getStringArray(R.array.notes)[position]);
+                showNoteDitals(corentNote);
+            }
+        });
+        /*LinearLayout layout=(LinearLayout)view;
         String[] names=getResources().getStringArray(R.array.name);
         for (int i=0;i<names.length;i++){
             TextView textView=new TextView(getContext());
@@ -55,7 +82,7 @@ public class NotesFragment extends Fragment {
                     showNoteDitals(corentNote);
                 }
             });
-        }
+        }*/
     }
     // Сохраним текущую позицию (вызывается перед выходом из фрагмента)
     @Override

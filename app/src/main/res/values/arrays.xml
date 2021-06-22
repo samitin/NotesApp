@@ -6,6 +6,8 @@
         <item>Название заметки 3</item>
         <item>Название заметки 4</item>
         <item>Название заметки 5</item>
+        <item>Название заметки 6</item>
+        <item>Название заметки 7</item>
     </string-array>
     <string-array name="description">
         <item>Описание заметки 1</item>
@@ -13,6 +15,8 @@
         <item>Описание заметки 3</item>
         <item>Описание заметки 4</item>
         <item>Описание заметки 5</item>
+        <item>Описание заметки 6</item>
+        <item>Описание заметки 7</item>
     </string-array>
     <string-array name="date">
         <item>01.01.01</item>
@@ -20,6 +24,8 @@
         <item>03.03.03</item>
         <item>04.04.04</item>
         <item>05.05.05</item>
+        <item>06.06.06</item>
+        <item>07.07.07</item>
     </string-array>
     <string-array name="notes">
         <item>Сама заметка 1</item>
@@ -27,6 +33,8 @@
         <item>Сама заметка 3</item>
         <item>Сама заметка 4</item>
         <item>Сама заметка 5</item>
+        <item>Сама заметка 6</item>
+        <item>Сама заметка 7</item>
     </string-array>
     <array name="picturis">
         <item>@drawable/nature1</item>

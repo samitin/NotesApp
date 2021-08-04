@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="NoteDitalsFragment"
+    tools:context=".view.NoteDitalsFragment"
     android:padding="20dp">
 
     <!-- TODO: Update blank fragment layout -->

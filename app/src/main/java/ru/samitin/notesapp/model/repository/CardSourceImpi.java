@@ -1,4 +1,4 @@
-package ru.samitin.notesapp.domain;
+package ru.samitin.notesapp.model.repository;
 
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.samitin.notesapp.R;
+import ru.samitin.notesapp.model.domain.CardData;
 
-public class CardSourceImpi implements CardSource{
+public class CardSourceImpi implements CardSource {
     private List<CardData>cardDataList;
     private Resources resources;
     public CardSourceImpi(Resources resources){

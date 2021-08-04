@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/notes"
-        android:name="ru.samitin.notesapp.NotesFragment"
+        android:name="ru.samitin.notesapp.view.NotesFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

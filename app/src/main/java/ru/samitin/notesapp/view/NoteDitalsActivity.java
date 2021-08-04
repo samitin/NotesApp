@@ -1,4 +1,4 @@
-package ru.samitin.notesapp;
+package ru.samitin.notesapp.view;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import ru.samitin.notesapp.R;
 
 public class NoteDitalsActivity extends AppCompatActivity {
 

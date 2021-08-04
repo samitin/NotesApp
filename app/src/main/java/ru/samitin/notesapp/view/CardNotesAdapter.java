@@ -1,4 +1,4 @@
-package ru.samitin.notesapp;
+package ru.samitin.notesapp.view;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,8 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import ru.samitin.notesapp.domain.CardData;
-import ru.samitin.notesapp.domain.CardSource;
+import ru.samitin.notesapp.R;
+import ru.samitin.notesapp.model.domain.CardData;
+import ru.samitin.notesapp.model.repository.CardSource;
 
 public class CardNotesAdapter extends RecyclerView.Adapter<CardNotesAdapter.ViewHolder> {
     private final static String TAG = "SocialNetworkAdapter";
@@ -66,8 +67,6 @@ public class CardNotesAdapter extends RecyclerView.Adapter<CardNotesAdapter.View
             title = itemView.findViewById(R.id.itemTextViewName);
             description = itemView.findViewById(R.id.itenTextViewDescription);
             image = itemView.findViewById(R.id.itemImageView);
-
-
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <!-- Фрагмент с выбором городов -->
-    <fragment android:name="ru.samitin.notesapp.NotesFragment"
+    <fragment android:name="ru.samitin.notesapp.view.NotesFragment"
         android:id="@+id/notes_list"
         android:layout_weight="1"
         android:layout_width="0px"

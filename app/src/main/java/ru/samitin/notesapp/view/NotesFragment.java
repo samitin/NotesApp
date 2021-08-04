@@ -1,4 +1,4 @@
-package ru.samitin.notesapp;
+package ru.samitin.notesapp.view;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -16,9 +16,13 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import ru.samitin.notesapp.domain.CardSource;
-import ru.samitin.notesapp.domain.CardSourceImpi;
-import ru.samitin.notesapp.domain.Note;
+import ru.samitin.notesapp.R;
+import ru.samitin.notesapp.model.repository.CardSource;
+import ru.samitin.notesapp.model.repository.CardSourceImpi;
+import ru.samitin.notesapp.model.domain.Note;
+import ru.samitin.notesapp.view.CardNotesAdapter;
+import ru.samitin.notesapp.view.NoteDitalsActivity;
+import ru.samitin.notesapp.view.NoteDitalsFragment;
 
 
 public class NotesFragment extends Fragment {
@@ -38,10 +42,6 @@ public class NotesFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
     private void initRecyclerView(RecyclerView recyclerView,CardSource data){
         // Эта установка служит для повышения производительности системы
         recyclerView.setHasFixedSize(true);
@@ -64,25 +64,7 @@ public class NotesFragment extends Fragment {
                 showNoteDitals(corentNote);
             }
         });
-        /*LinearLayout layout=(LinearLayout)view;
-        String[] names=getResources().getStringArray(R.array.name);
-        for (int i=0;i<names.length;i++){
-            TextView textView=new TextView(getContext());
-            textView.setText(names[i]);
-            textView.setTextSize(30);
-            layout.addView(textView);
-            final int fi=i;
-            textView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    corentNote=new Note(getResources().getStringArray(R.array.name)[fi],
-                            getResources().getStringArray(R.array.description)[fi],
-                            getResources().getStringArray(R.array.date)[fi],
-                            getResources().getStringArray(R.array.notes)[fi]);
-                    showNoteDitals(corentNote);
-                }
-            });
-        }*/
+
     }
     // Сохраним текущую позицию (вызывается перед выходом из фрагмента)
     @Override
@@ -130,7 +112,7 @@ public class NotesFragment extends Fragment {
 
     private void showPortNoteDitals(Note note){
         Intent intent=new Intent();
-        intent.setClass(getActivity(),NoteDitalsActivity.class);
+        intent.setClass(getActivity(), NoteDitalsActivity.class);
         intent.putExtra(NoteDitalsFragment.ARG_NOTE,corentNote);
         startActivity(intent);
     }

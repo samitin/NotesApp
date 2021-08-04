@@ -1,4 +1,4 @@
-package ru.samitin.notesapp.domain;
+package ru.samitin.notesapp.model.domain;
 
 public class CardData {
     private String name;

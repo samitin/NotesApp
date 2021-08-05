@@ -35,4 +35,6 @@
     <string name="fragment_navigation">боковое меню</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="update">Изменить</string>
+    <string name="delete">Удалить</string>
 </resources>

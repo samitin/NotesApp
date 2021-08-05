@@ -3,7 +3,9 @@ package ru.samitin.notesapp.view;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +41,11 @@ public class NotesFragment extends Fragment {
     private CardNotesAdapter adapter;
     private RecyclerView recyclerView;
 
+    public static NotesFragment newInstance(Bundle bundle){
+       NotesFragment fragment=new NotesFragment();
+       fragment.setArguments(bundle);
+       return fragment;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,6 +62,8 @@ public class NotesFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view_lines);
         // Получим источник данных для списка
         data = new CardSourceImpi(getResources()).init();
+        if (getArguments()!=null)
+            data.updateCardData(getArguments().getInt(AddCardFragment.KEY_ADD_POSITION),getArguments().getParcelable(AddCardFragment.KEY_ADD_CARD));
         initRecyclerView();
     }
 
@@ -66,7 +75,7 @@ public class NotesFragment extends Fragment {
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         // Установим адаптер
-        adapter=new CardNotesAdapter(data);
+        adapter=new CardNotesAdapter(data,this);
         recyclerView.setAdapter(adapter);
         DividerItemDecoration itemDicoration=new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL);
         itemDicoration.setDrawable(getResources().getDrawable(R.drawable.seporator,null));
@@ -153,5 +162,34 @@ public class NotesFragment extends Fragment {
         intent.putExtra(NoteDitalsFragment.ARG_NOTE,corentNote);
         startActivity(intent);
     }
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = requireActivity().getMenuInflater();
+        inflater.inflate(R.menu.card_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        int position = adapter.getMenuPosition();
+        switch(item.getItemId()) {
+            case R.id.action_update:
+               requireActivity().getSupportFragmentManager()
+                       .beginTransaction()
+                       .add(R.id.home,new AddCardFragment().newInstance(data.getCardData(position),position))
+                       .addToBackStack("notes")
+                       .commit();
+                adapter.notifyItemChanged(position);
+                return true;
+            case R.id.action_delete:
+                data.deleteCardData(position);
+                adapter.notifyItemRemoved(position);
+                return true;
+        }
+        return super.onContextItemSelected(item);
+    }
+
 
 }
+
+

@@ -5,21 +5,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import ru.samitin.notesapp.R;
+import ru.samitin.notesapp.model.domain.CardData;
 import ru.samitin.notesapp.model.domain.Note;
 
 public class AddCardFragment extends Fragment {
-    public static final String KEY_ADD_NOTE="KEY_ADD_NOTE";
+    public static final String KEY_ADD_CARD="KEY_ADD_CARD";
+    public static final String KEY_ADD_POSITION="KEY_ADD_POSITION";
 
-    public static AddCardFragment newInstance(Note note){
+    public static AddCardFragment newInstance(CardData card,int position){
         AddCardFragment fragment=new AddCardFragment();
         Bundle bundle=new Bundle();
-        bundle.putParcelable(KEY_ADD_NOTE,note);
+        bundle.putParcelable(KEY_ADD_CARD,card);
+        bundle.putInt(KEY_ADD_POSITION,position);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -39,24 +44,47 @@ public class AddCardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         EditText etName=view.findViewById(R.id.add_card_name);
         EditText etDescription=view.findViewById(R.id.add_card_description);
-        EditText etDate=view.findViewById(R.id.add_card_date);
-        EditText etNote=view.findViewById(R.id.add_card_note);
+        CardData cardData;
+        int position=0;
         if (getArguments()!=null){
-            Note note=getArguments().getParcelable(KEY_ADD_NOTE);
-            etName.setText(note.getNoteName());
-            etDescription.setText(note.getNoteDescription());
-            etDate.setText(note.getNoteDate());
-            etNote.setText(note.getNote());
+            cardData=getArguments().getParcelable(KEY_ADD_CARD);
+            position=getArguments().getInt(KEY_ADD_POSITION);
+            etName.setText(cardData.getName());
+            etDescription.setText(cardData.getDescription());
+
         }
+
+        int finalPosition = position;
+        int image=getImageId(view);
         view.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Note note=new Note(etName.getText().toString(),
-                        etDescription.getText().toString(),
-                        etDate.getText().toString(),
-                        etNote.getText().toString());
+            public void onClick(View v) {
+                Bundle bundle=new Bundle();
+                bundle.putParcelable(KEY_ADD_CARD,new CardData(etName.getText().toString(),getImageId(view),
+                        etDescription.getText().toString()));
+                bundle.putInt(KEY_ADD_POSITION, finalPosition);
+                requireActivity().getSupportFragmentManager()
+                .beginTransaction().replace(R.id.home,new NotesFragment().newInstance(bundle)).commit();
 
             }
         });
+    }
+    private int getImageId(View view){
+        RadioButton r1=view.findViewById(R.id.add_card_image1);
+        if(r1.isChecked())
+            return R.drawable.nature1;
+        RadioButton r2=view.findViewById(R.id.add_card_image2);
+        if(r2.isChecked())
+            return R.drawable.nature2;
+        RadioButton r3=view.findViewById(R.id.add_card_image3);
+        if(r3.isChecked())
+            return R.drawable.nature3;
+        RadioButton r4=view.findViewById(R.id.add_card_image4);
+        if(r4.isChecked())
+            return R.drawable.nature4;
+        RadioButton r5=view.findViewById(R.id.add_card_image5);
+        if(r5.isChecked())
+            return R.drawable.nature5;
+        return R.drawable.nature1;
     }
 }

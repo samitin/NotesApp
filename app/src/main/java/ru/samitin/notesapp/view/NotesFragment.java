@@ -1,14 +1,20 @@
-package ru.samitin.notesapp;
+package ru.samitin.notesapp.view;
 
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -16,9 +22,14 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import ru.samitin.notesapp.domain.CardSource;
-import ru.samitin.notesapp.domain.CardSourceImpi;
-import ru.samitin.notesapp.domain.Note;
+
+
+import ru.samitin.notesapp.R;
+import ru.samitin.notesapp.model.domain.CardData;
+import ru.samitin.notesapp.model.repository.CardSource;
+import ru.samitin.notesapp.model.repository.CardSourceImpi;
+import ru.samitin.notesapp.model.domain.Note;
+
 
 
 public class NotesFragment extends Fragment {
@@ -26,30 +37,45 @@ public class NotesFragment extends Fragment {
     public static final String CURRENT_NOTE = "CurrentNote";
     private Note corentNote;    // Текущая позиция
     private boolean isLandscape;
+    private CardSource data;
+    private CardNotesAdapter adapter;
+    private RecyclerView recyclerView;
 
+    public static NotesFragment newInstance(Bundle bundle){
+       NotesFragment fragment=new NotesFragment();
+       fragment.setArguments(bundle);
+       return fragment;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_notes, container, false);
-        RecyclerView recyclerView=view.findViewById(R.id.recycler_view_lines);
-        CardSource data=new CardSourceImpi(getResources()).init();
-        initRecyclerView(recyclerView,data);
+        initView(view);
+        Toolbar toolbar=view.findViewById(R.id.toolbar);
+        initToolBar(toolbar);
+        setHasOptionsMenu(true);
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    private void initView(View view) {
+        recyclerView = view.findViewById(R.id.recycler_view_lines);
+        // Получим источник данных для списка
+        data = new CardSourceImpi(getResources()).init();
+        if (getArguments()!=null)
+            data.updateCardData(getArguments().getInt(AddCardFragment.KEY_ADD_POSITION),getArguments().getParcelable(AddCardFragment.KEY_ADD_CARD));
+        initRecyclerView();
     }
-    private void initRecyclerView(RecyclerView recyclerView,CardSource data){
+
+
+    private void initRecyclerView(){
         // Эта установка служит для повышения производительности системы
         recyclerView.setHasFixedSize(true);
         // Будем работать со встроенным менеджером
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         // Установим адаптер
-        CardNotesAdapter adapter=new CardNotesAdapter(data);
+        adapter=new CardNotesAdapter(data,this);
         recyclerView.setAdapter(adapter);
         DividerItemDecoration itemDicoration=new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL);
         itemDicoration.setDrawable(getResources().getDrawable(R.drawable.seporator,null));
@@ -64,39 +90,35 @@ public class NotesFragment extends Fragment {
                 showNoteDitals(corentNote);
             }
         });
-        /*LinearLayout layout=(LinearLayout)view;
-        String[] names=getResources().getStringArray(R.array.name);
-        for (int i=0;i<names.length;i++){
-            TextView textView=new TextView(getContext());
-            textView.setText(names[i]);
-            textView.setTextSize(30);
-            layout.addView(textView);
-            final int fi=i;
-            textView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    corentNote=new Note(getResources().getStringArray(R.array.name)[fi],
-                            getResources().getStringArray(R.array.description)[fi],
-                            getResources().getStringArray(R.array.date)[fi],
-                            getResources().getStringArray(R.array.notes)[fi]);
-                    showNoteDitals(corentNote);
-                }
-            });
-        }*/
     }
+
+    private void initToolBar(Toolbar toolbar){
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.point_add:
+                        data.addCardData(new CardData("Заголовок " + (data.size()+1),
+                                R.drawable.nature1,"Описание " + (data.size()+1)));
+                        adapter.notifyItemInserted(data.size() - 1);
+                        recyclerView.scrollToPosition(data.size() - 1);
+                        //Toast.makeText(getContext(),"NotesFragment",Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.point_clear:
+                        data.clearCardData();
+                        adapter.notifyDataSetChanged();
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
+
     // Сохраним текущую позицию (вызывается перед выходом из фрагмента)
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putParcelable(CURRENT_NOTE, corentNote);
         super.onSaveInstanceState(outState);
-    }
-
-
-    private void showNoteDitals(Note note){
-        if (isLandscape)
-            showLandNoteDitals(note);
-        else
-            showPortNoteDitals(note);
     }
 
     @Override
@@ -116,8 +138,15 @@ public class NotesFragment extends Fragment {
 
            showLandNoteDitals(corentNote);
         }
-
     }
+
+    private void showNoteDitals(Note note){
+        if (isLandscape)
+            showLandNoteDitals(note);
+        else
+            showPortNoteDitals(note);
+    }
+
     private void showLandNoteDitals(Note note){
         NoteDitalsFragment ditail=NoteDitalsFragment.newInstance(note);
         FragmentManager fragmentManager=requireActivity().getSupportFragmentManager();
@@ -127,12 +156,40 @@ public class NotesFragment extends Fragment {
         transaction.commit();
     }
 
-
     private void showPortNoteDitals(Note note){
         Intent intent=new Intent();
-        intent.setClass(getActivity(),NoteDitalsActivity.class);
+        intent.setClass(getActivity(), NoteDitalsActivity.class);
         intent.putExtra(NoteDitalsFragment.ARG_NOTE,corentNote);
         startActivity(intent);
     }
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = requireActivity().getMenuInflater();
+        inflater.inflate(R.menu.card_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        int position = adapter.getMenuPosition();
+        switch(item.getItemId()) {
+            case R.id.action_update:
+               requireActivity().getSupportFragmentManager()
+                       .beginTransaction()
+                       .add(R.id.home,new AddCardFragment().newInstance(data.getCardData(position),position))
+                       .addToBackStack("notes")
+                       .commit();
+                adapter.notifyItemChanged(position);
+                return true;
+            case R.id.action_delete:
+                data.deleteCardData(position);
+                adapter.notifyItemRemoved(position);
+                return true;
+        }
+        return super.onContextItemSelected(item);
+    }
+
 
 }
+
+

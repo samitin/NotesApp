@@ -1,4 +1,4 @@
-package ru.samitin.notesapp;
+package ru.samitin.notesapp.view;
 
 import android.os.Bundle;
 
@@ -10,7 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import ru.samitin.notesapp.domain.Note;
+import ru.samitin.notesapp.R;
+import ru.samitin.notesapp.model.domain.Note;
 
 public class NoteDitalsFragment extends Fragment {
 

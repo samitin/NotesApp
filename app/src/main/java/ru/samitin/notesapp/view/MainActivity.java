@@ -1,4 +1,4 @@
-package ru.samitin.notesapp;
+package ru.samitin.notesapp.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -15,19 +15,23 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import ru.samitin.notesapp.R;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initToolbar();
+       // initToolbar();
     }
+
     private void initToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         initDrawer(toolbar);
     }
+
     private void initDrawer(Toolbar toolbar) {
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -44,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
 
-                    drawer.closeDrawer(GravityCompat.START);
+                drawer.closeDrawer(GravityCompat.START);
 
 
                 return true;
@@ -52,25 +56,25 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
+/*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Обработка выбора пункта меню приложения (активити)
         int id = item.getItemId();
 
-        switch(id){
+        switch (id) {
             case R.id.point_one:
-                Toast.makeText(this,R.string.point_one,Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.point_one, Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.point_two:
-                Toast.makeText(this,R.string.point_two,Toast.LENGTH_SHORT).show();
+            case R.id.point_add:
+                Toast.makeText(this, R.string.point_two, Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.point_three:
-                Toast.makeText(this,R.string.point_three,Toast.LENGTH_SHORT).show();
+            case R.id.point_clear:
+                Toast.makeText(this, R.string.point_three, Toast.LENGTH_SHORT).show();
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -85,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
                 return true;
             }
+
             // реагирует на нажатие каждой клавиши
             @Override
             public boolean onQueryTextChange(String newText) {

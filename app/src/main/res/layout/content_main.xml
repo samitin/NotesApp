@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?><!-- это макет для портретной ориентации -->
 <!-- в портретной ориентации у activity только один фрагмент -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <fragment
         android:id="@+id/notes"
-        android:name="ru.samitin.notesapp.NotesFragment"
+        android:name="ru.samitin.notesapp.view.NotesFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

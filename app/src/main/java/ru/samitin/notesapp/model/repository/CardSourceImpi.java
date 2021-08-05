@@ -37,6 +37,26 @@ public class CardSourceImpi implements CardSource {
     public CardData getCardData(int position) {
         return cardDataList.get(position);
     }
+    @Override
+    public void deleteCardData(int position) {
+        cardDataList.remove(position);
+    }
+
+    @Override
+    public void updateCardData(int position, CardData cardData) {
+        cardDataList.set(position, cardData);
+    }
+
+    @Override
+    public void addCardData(CardData cardData) {
+        cardDataList.add(cardData);
+    }
+
+    @Override
+    public void clearCardData() {
+        cardDataList.clear();
+    }
+
 
     @Override
     public int size() {

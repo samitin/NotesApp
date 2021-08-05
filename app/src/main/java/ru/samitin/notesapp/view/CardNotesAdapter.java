@@ -36,7 +36,6 @@ public class CardNotesAdapter extends RecyclerView.Adapter<CardNotesAdapter.View
         // Через Inflater
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card,parent,false);
         // Здесь можно установить всякие параметры
-        Log.d(TAG, "onCreateViewHolder");
         return new ViewHolder(v);
     }
     // Заменить данные в пользовательском интерфейсе

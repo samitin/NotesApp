@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initToolbar();
+       // initToolbar();
     }
 
     private void initToolbar() {
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
+/*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Обработка выбора пункта меню приложения (активити)
@@ -66,15 +66,15 @@ public class MainActivity extends AppCompatActivity {
             case R.id.point_one:
                 Toast.makeText(this, R.string.point_one, Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.point_two:
+            case R.id.point_add:
                 Toast.makeText(this, R.string.point_two, Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.point_three:
+            case R.id.point_clear:
                 Toast.makeText(this, R.string.point_three, Toast.LENGTH_SHORT).show();
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
